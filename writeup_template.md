@@ -1,8 +1,5 @@
 #**Behavioral Cloning** 
 
-##Writeup Template
-
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
 
 ---
 
@@ -54,9 +51,9 @@ The model.py file contains the code for training and saving the convolution neur
 
 ####1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) followed by 3 fully connected layers of sizes 1024, 512 and 100. 
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+The model includes ELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using an external function (code line ??). 
 
 ####2. Attempts to reduce overfitting in the model
 
@@ -70,29 +67,54 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 
 ####4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+The training data used was entirely the dataset provided by Udacity.
 
-For details about how I created the training data, see the next section. 
+For details about how I augmented the training data, see the next section. 
 
 ###Model Architecture and Training Strategy
 
 ####1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
+The overall strategy for deriving a model architecture was to observe the training and validation loss and experiment with the number of layers, filters and dropout. And finally test it on the track to see how well it performs.
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+Initially I did not drop steering angles from the dataset which were close to zero. I later learned that the set was highly biased for steering angles at zero, by observing the histogram of the angles.
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
+My first attempt at the model was to use a convolution neural network model similar to the NVIDIA network. I thought this model might be appropriate because it has been used for similar applications with success. 
 
-To combat the overfitting, I modified the model so that ...
+In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that I was getting a training loss higher than my validation loss and removed dropout from the network to counteract this. 
 
-Then I ... 
+Unfortunately this resulted in poor performance on the track and the first few attempts at running the simulator were not good.
+
+I then began implementing data augmentation, in the hope that this would reduce the bias of the data(such as zero steering angle, and angles for left turns). Further details on augmentation techniques is covered below.
+
+I then observed that the model architecture may be too involved, and with the augmented dataset, a smaller network might perform better for this task.
+
+This led me to a final network architecture of :
+My final model consisted of the following layers:
+
+| Layer         		|     Description	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| Input         		| 64x64x3 RGB Image   							| 
+| Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x6 	|
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 14x14x6 				|
+| Convolution 5x5	    | 1x1 stride, valid padding, outputs 10x10x16  |
+| RELU					|												|
+| Max Pooling		      | 2x2 stride, outputs 5x5x16       |
+| Fully Connected 400x1			| outputs 120x1       									|
+| RELU					|												|
+| Dropout 1.0					|												|
+| Fully Connected 120x1			| outputs 84x1       									|
+| RELU					|												|
+| Dropout 1.0					|												|
+| Fully Connected 84x1			| outputs 43x1       									|
+|	Softmax 43x1					|		outputs 43x1										|
 
 The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
-####2. Final Model Architecture
+#### 2. Final Model Architecture
 
 The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
 
@@ -100,7 +122,7 @@ Here is a visualization of the architecture (note: visualizing the architecture 
 
 ![alt text][image1]
 
-####3. Creation of the Training Set & Training Process
+#### 3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
