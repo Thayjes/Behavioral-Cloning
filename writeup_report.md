@@ -45,25 +45,25 @@ python drive.py model.h5
 
 #### 3. Submission code is usable and readable
 
-The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
+The Track1Model.ipynb file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
 ###Model Architecture and Training Strategy
 
 #### 1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) followed by 3 fully connected layers of sizes 1024, 512 and 100. 
+My model consists of a convolution neural network with 1x1, 3x3, 3x3, 3x3 filter sizes and depths between 32, 64 and 128 followed by 3 fully connected layers of sizes 512, 200 and 100. 
 
-The model includes ELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using an external function (code line ??). 
+The model includes ELU layers to introduce nonlinearity, and the data is normalized in the model using external function in the first cell of the notebook.
 
 #### 2. Attempts to reduce overfitting in the model
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+The model contains dropout layers in order to reduce overfitting (7th cell).
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+The model was trained and validated on different data sets to ensure that the model was not overfitting. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 #### 3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer, so the learning rate was not tuned manually (7th cell).
 
 #### 4. Appropriate training data
 
