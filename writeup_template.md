@@ -15,7 +15,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
+[image1]: ./examples/Track1_Network.png "Model Visualization"
 [image2]: ./examples/placeholder.png "Grayscaling"
 [image3]: ./examples/placeholder_small.png "Recovery Image"
 [image4]: ./examples/placeholder_small.png "Recovery Image"
@@ -90,25 +90,7 @@ I then began implementing data augmentation, in the hope that this would reduce 
 I then observed that the model architecture may be too involved, and with the augmented dataset, a smaller network might perform better for this task.
 
 This led me to a final network architecture of :
-My final model consisted of the following layers:
 
-| Layer         		|     Description	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Input         		| 64x64x3 RGB Image   							| 
-| Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x6 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 14x14x6 				|
-| Convolution 5x5	    | 1x1 stride, valid padding, outputs 10x10x16  |
-| RELU					|												|
-| Max Pooling		      | 2x2 stride, outputs 5x5x16       |
-| Fully Connected 400x1			| outputs 120x1       									|
-| RELU					|												|
-| Dropout 1.0					|												|
-| Fully Connected 120x1			| outputs 84x1       									|
-| RELU					|												|
-| Dropout 1.0					|												|
-| Fully Connected 84x1			| outputs 43x1       									|
-|	Softmax 43x1					|		outputs 43x1										|
 
 The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
 
@@ -116,7 +98,33 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 
 #### 2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes 
+
+| Layer         		|     Description	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| Input         		| 64x64x3 RGB Image   							| 
+| Convolution 1x1     	| 1x1 stride, same padding, outputs 64x64x3	|
+| ELU					|												|
+| Convolution 3x3  | 1x1 stride, same padding, outputs 64x64x32 |
+| ELU					|												|
+| Max Pooling		      | 2x2 stride, outputs 32x32x32 |
+| Dropout 0.5		|												|
+| Convolution 3x3  | 1x1 stride, same padding, outputs 32x32x64 |
+| ELU					|												|
+| Max Pooling		      | 2x2 stride, outputs 16x16x64 |
+| Dropout 0.5		|												|
+| Convolution 3x3  | 1x1 stride, same padding, outputs 16x16x128 |
+| ELU					|												|
+| Max Pooling		      | 2x2 stride, outputs 8x8x128  |
+| Dropout 0.5		|	
+| Flatten 8x8x128 | outputs 8192x1			|
+|	Dense   8192x1			|		outputs 512x1									|
+| ELU					|												|
+|	Dense   512x1 			|		outputs 200x1									|
+| ELU					|												|
+|	Dense   200x1 			|		outputs 100x1									|
+| ELU					|												|
+|	Dense   100x1 			|		outputs 1x1  									|
 
 Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
 
