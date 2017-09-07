@@ -15,7 +15,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/Track1_Network.png "Model Visualization"
+[image1]: ./examples/Track1_Network.PNG "Model Visualization"
 [image2]: ./examples/placeholder.png "Grayscaling"
 [image3]: ./examples/placeholder_small.png "Recovery Image"
 [image4]: ./examples/placeholder_small.png "Recovery Image"
@@ -128,7 +128,7 @@ The final model architecture (model.py lines 18-24) consisted of a convolution n
 
 Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
 
-![alt text][image1]
+![Network Architecture Diagram][image1]
 
 #### 3. Creation of the Training Set & Training Process
 
