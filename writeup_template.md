@@ -16,8 +16,8 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./examples/Track1_Network.PNG "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
+[image2]: ./examples/HistNoAug.jpeg "Histogram of Original Steering Angle Data"
+[image3]: ./examples/Augmented_Images.jpeg "Augmented Images"
 [image4]: ./examples/placeholder_small.png "Recovery Image"
 [image5]: ./examples/placeholder_small.png "Recovery Image"
 [image6]: ./examples/placeholder_small.png "Normal Image"
@@ -81,24 +81,22 @@ Initially I did not drop steering angles from the dataset which were close to ze
 
 My first attempt at the model was to use a convolution neural network model similar to the NVIDIA network. I thought this model might be appropriate because it has been used for similar applications with success. 
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that I was getting a training loss higher than my validation loss and removed dropout from the network to counteract this. 
+In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. 
 
-Unfortunately this resulted in poor performance on the track and the first few attempts at running the simulator were not good.
+Unfortunately this network resulted in poor performance on the track and the first few attempts at running the simulator were not good.
 
 I then began implementing data augmentation, in the hope that this would reduce the bias of the data(such as zero steering angle, and angles for left turns). Further details on augmentation techniques is covered below.
 
-I then observed that the model architecture may be too involved, and with the augmented dataset, a smaller network might perform better for this task.
+I then observed that the model architecture may be too involved, and with the augmented dataset, a smaller network might perform better for this task. After training for 3 epochs with a smaller network on the augmented data set, this improved performance and my car was able to go past the bridge but shortly fell off the track afterwards.
 
-This led me to a final network architecture of :
+Finally I dropped around 40% of the steering angle data with absolute values <= 0.01. And trained the same model for another 3 epochs.
 
+This final step took the car over the finish line, and it succesfully completed one lap around the entire track autonomously without leaving the track even once!
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
-
-At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
 #### 2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes 
+The final model architecture  consisted of a convolution neural network with the following layers and layer sizes 
 
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
@@ -132,24 +130,32 @@ Here is a visualization of the architecture (note: visualizing the architecture 
 
 #### 3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+I was able to complete the first track successfully using only the Udacity data along with augmentation techniqiues.
 
-![alt text][image2]
+The first step was to visualize the histogram of the steering angles of the given training data.
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+![Histogram without Augmentation][image2]
 
+Clearly there is a bias towards angles close to zero as well an unequal distribution of sample for different angle values.
+
+I used the following augmentation techniques to improve the quality of the dataset:
+* Brightness Augmentation: Adjusted the brightness of the image randomly.
+* Flipping: Randomly flipped the image and reversed the steering angle accordingly.
+* Shadow Augmentation: Placed a shadow randomly on portions of the image.
+* Using the Left and Right Camera Images: Randomly selected left, right camera images(along with center) and added a corrective steering
+angle value of +- 0.25.
+* Translation: Randomly shifted the image by a small value in x and y directions, to imitate slopes and getting close to the sides
+of the track.
+
+I used the following preprocessing methods:
+* Cropping: Cropped the image by 70 pixels at top and 25 pixels at the bottom, so as to just retain the important part of the image.
+* Resizing: Resized the image from (320, 160) to (64, 64) to improve speed of training.
+* Normalized: Normalized the image pixel values to lie in the range -0.5 to 0.5.
+
+Here are some examples of augmented and preprocessed images:
 ![alt text][image3]
-![alt text][image4]
-![alt text][image5]
 
-Then I repeated this process on track two in order to get more data points.
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
-
-![alt text][image6]
-![alt text][image7]
-
-Etc ....
 
 After the collection process, I had X number of data points. I then preprocessed this data by ...
 
