@@ -18,8 +18,8 @@ The goals / steps of this project are the following:
 [image1]: ./examples/Track1_Network.PNG "Model Visualization"
 [image2]: ./examples/HistNoAug.jpeg "Histogram of Original Steering Angle Data"
 [image3]: ./examples/Augmented_Images.jpeg "Augmented Images"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
+[image4]: ./examples/HistAugNoDrop.jpeg "Histogram of Augmented Steering Angle Data"
+[image5]: ./examples/HistAugDrop(40%).jpeg "Histogram of Augmented Steering Angle Data (40%drop)"
 [image6]: ./examples/placeholder_small.png "Normal Image"
 [image7]: ./examples/placeholder_small.png "Flipped Image"
 
@@ -153,9 +153,16 @@ I used the following preprocessing methods:
 * Normalized: Normalized the image pixel values to lie in the range -0.5 to 0.5.
 
 Here are some examples of augmented and preprocessed images:
+
 ![alt text][image3]
 
+Here is the histogram of steering angles after augmentation:
 
+![alt text][image4]
+
+And finally, the histogram of steering angles after dropping 40% of angles with absolute values <=0.01:
+
+![alt text][image5]
 
 After the collection process, I had X number of data points. I then preprocessed this data by ...
 
