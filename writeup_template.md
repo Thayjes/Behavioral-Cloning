@@ -19,7 +19,7 @@ The goals / steps of this project are the following:
 [image2]: ./examples/HistNoAug.jpeg "Histogram of Original Steering Angle Data"
 [image3]: ./examples/Augmented_Images.jpeg "Augmented Images"
 [image4]: ./examples/HistAugNoDrop.jpeg "Histogram of Augmented Steering Angle Data"
-[image5]: ./examples/HistAugDrop(40%).jpeg "Histogram of Augmented Steering Angle Data (40%drop)"
+[image5]: ./examples/HistAugDrop.jpeg "Histogram of Augmented Steering Angle Data with Drop"
 [image6]: ./examples/placeholder_small.png "Normal Image"
 [image7]: ./examples/placeholder_small.png "Flipped Image"
 
